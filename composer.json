@@ -1,0 +1,38 @@
+{
+    "name": "canvass/canvass-paint",
+    "description": "A form rendering library",
+    "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Kelly",
+            "email": "puritandesigns@gmail.com"
+        }
+    ],
+    "require": {
+        "canvass/canvass-core": "^0.1.0"
+    },
+    "suggest": {
+        "ext-pdo": "For use with PdoModels"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "CanvassPaint\\": "src/CanvassPaint/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "../canvass-core/src/helpers.php"
+        ],
+        "psr-4": {
+            "Implement\\": "tests/Implement/",
+            "Tests\\": "tests/Tests/"
+        }
+    }
+}
