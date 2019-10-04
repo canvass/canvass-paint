@@ -8,7 +8,7 @@ use Canvass\Support\PreparesFormData;
 
 class Form extends AbstractModel implements FormModel
 {
-    protected static $table = 'forms';
+    protected static $table = 'canvass_forms';
     
     use PreparesFormData;
 
