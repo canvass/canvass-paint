@@ -7,6 +7,9 @@ use CanvassPaint\Contract\RenderFunction;
 
 class RenderForm
 {
+    /** @var \Canvass\Contract\FormModel */
+    private $form;
+
     /** @var \CanvassPaint\Contract\RenderFunction */
     private $renderer;
 
@@ -18,14 +21,19 @@ class RenderForm
     public function render($form_id, $owner_id = null, array $meta_data = [])
     {
         /** @var \Canvass\Contract\FormModel $form */
-        $form = Forge::form()->find($form_id, $owner_id);
+        $this->form = Forge::form()->find($form_id, $owner_id);
 
-        $fields = $form->getNestedFields();
+        $fields = $this->form->getNestedFields();
 
-        $data = $form->prepareData($fields);
+        $data = $this->form->prepareData($fields);
 
         $data['meta'] = $meta_data;
 
         return $this->renderer->render($data);
+    }
+
+    public function getForm(): \Canvass\Contract\FormModel
+    {
+        return $this->form;
     }
 }

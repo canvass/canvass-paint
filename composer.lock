@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "canvass/canvass-core",
-            "version": "v0.2.0",
+            "version": "v0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/canvass/canvass-core.git",
-                "reference": "b3edec0459058ae9239492609676f264eb235a18"
+                "reference": "e5dbecaec0a05722425cddc3fdb9777544e7ff3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/canvass/canvass-core/zipball/b3edec0459058ae9239492609676f264eb235a18",
-                "reference": "b3edec0459058ae9239492609676f264eb235a18",
+                "url": "https://api.github.com/repos/canvass/canvass-core/zipball/e5dbecaec0a05722425cddc3fdb9777544e7ff3f",
+                "reference": "e5dbecaec0a05722425cddc3fdb9777544e7ff3f",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
                 }
             ],
             "description": "A form building library",
-            "time": "2019-10-16T16:29:58+00:00"
+            "time": "2019-10-17T20:06:52+00:00"
         },
         {
             "name": "promo-code/web-anvil",
