@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "canvass/canvass-core": "^0.2"
+        "canvass/canvass-core": "0.*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
