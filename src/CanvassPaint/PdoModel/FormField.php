@@ -3,17 +3,34 @@
 namespace CanvassPaint\PdoModel;
 
 use Canvass\Contract\FormFieldModel;
+use Canvass\Contract\FormModel;
+use Canvass\Forge;
 use Canvass\Support\FieldTypes;
 use Canvass\Support\PreparesFormFieldData;
 
 class FormField extends AbstractModel implements FormFieldModel
 {
+    /** @var FormModel */
+    private $form_model;
+
     protected static $table = 'canvass_form_fields';
 
     use PreparesFormFieldData;
 
-    public function __construct(\PDO $db, array $data = [])
+    public function __construct(
+        \PDO $db,
+        array $data = [],
+        FormModel $form = null
+    )
     {
+        if (null !== $form) {
+            $this->form_model = $form;
+        } elseif (isset($data['form']) && $data['form'] instanceof FormModel) {
+            $this->form_model = $data['form'];
+
+            unset($data['form']);
+        }
+
         parent::__construct($db, $data);
 
         $this->convertAttributesToArray();
@@ -68,6 +85,23 @@ class FormField extends AbstractModel implements FormFieldModel
         return $this->data['attributes'][$key] ?? null;
     }
 
+    public function getFormModel(): FormModel
+    {
+        if (null === $this->form_model) {
+            $this->form_model = Forge::form()->find(
+                $this->getData('form_id'),
+                Forge::getOwnerId()
+            );
+        }
+
+        return $this->form_model;
+    }
+
+    public function setFormModel(FormModel $form_model): void
+    {
+        $this->form_model = $form_model;
+    }
+
     public function hasAttribute($key): bool
     {
         $this->convertAttributesToArray();
@@ -80,6 +114,29 @@ class FormField extends AbstractModel implements FormFieldModel
         $this->convertAttributesToArray();
 
         $this->data['attributes'][$key] = $value;
+    }
+
+    /**
+     * @param string $sql
+     * @param array|null $params
+     * @param FormModel|null $form_model
+     * @return \CanvassPaint\PdoModel\AbstractModel[]
+     */
+    protected function fetchModels(
+        string $sql,
+        array $params = null,
+        FormModel $form_model = null
+    )
+    {
+        $rows = $this->fetchAll($sql, $params);
+
+        $models = [];
+
+        foreach ($rows as $row) {
+            $models[] = new static($this->db, $row, $form_model);
+        }
+
+        return $models;
     }
 
     private function convertAttributesToArray(): void

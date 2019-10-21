@@ -60,7 +60,7 @@ class Form extends AbstractModel implements FormModel
 
         $field = new FormField($this->db);
         
-        return $field->fetchModels($sql, $params);
+        return $field->fetchModels($sql, $params, $this);
     }
 
     public function findFieldWithSortOf(
