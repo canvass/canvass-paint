@@ -63,10 +63,15 @@ class Form extends AbstractModel implements FormModel
         return $field->fetchModels($sql, $params, $this);
     }
 
+    /**
+     * @param int $sort
+     * @param int $parent_id
+     * @return \Canvass\Contract\FormFieldModel|null
+     */
     public function findFieldWithSortOf(
         int $sort,
         $parent_id = 0
-    ): ?FormFieldModel
+    )
     {
         $sql = 'SELECT * FROM ' . FormField::getTable() .
             ' WHERE form_id = :form_id' .

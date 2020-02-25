@@ -8,7 +8,7 @@ class AbstractModel implements \ArrayAccess
     protected $db;
     /** @var string */
     protected static $table = '';
-    /** @var array  */
+    /** @var array */
     protected $data;
     /** @var array */
     protected $columns = [];
@@ -37,7 +37,12 @@ class AbstractModel implements \ArrayAccess
         return $this;
     }
 
-    protected function fetchModel(string $sql, array $params = null): AbstractModel
+    /**
+     * @param string $sql
+     * @param array|null $params
+     * @return \CanvassPaint\PdoModel\AbstractModel
+     */
+    protected function fetchModel(string $sql, array $params = null)
     {
         $row = $this->fetch($sql, $params);
 
@@ -62,11 +67,17 @@ class AbstractModel implements \ArrayAccess
         return $models;
     }
 
+    /**
+     * @param string $sql
+     * @param array|null $params
+     * @param int $fetch_style
+     * @return array
+     */
     protected function fetch(
         string $sql,
         array $params = null,
         int $fetch_style = \PDO::FETCH_ASSOC
-    ): array
+    )
     {
         $statement = $this->db->prepare($sql);
 
@@ -75,11 +86,17 @@ class AbstractModel implements \ArrayAccess
         return $statement->fetch($fetch_style);
     }
 
+    /**
+     * @param string $sql
+     * @param array|null $params
+     * @param int $fetch_style
+     * @return array
+     */
     protected function fetchAll(
         string $sql,
         array $params = null,
         int $fetch_style = \PDO::FETCH_ASSOC
-    ): array
+    )
     {
         $statement = $this->db->prepare($sql);
 
@@ -103,7 +120,8 @@ class AbstractModel implements \ArrayAccess
         $this->data[$key] = $value;
     }
 
-    public static function getTable(): string
+    /** @return string */
+    public static function getTable()
     {
         return static::$table;
     }

@@ -54,7 +54,8 @@ class FormField extends AbstractModel implements FormFieldModel
         return $this->fetchModels($sql, $params);
     }
 
-    public function getHtmlType(): string
+    /** @return string */
+    public function getHtmlType()
     {
         return $this->data['canvass_type'];
         $type = $this->data['type'];
@@ -68,6 +69,12 @@ class FormField extends AbstractModel implements FormFieldModel
         }
 
         return $type;
+    }
+
+    /** @return string */
+    public function getGeneralType()
+    {
+        return $this->data['general_type'];
     }
 
     public function retrieveChildren()
@@ -85,7 +92,11 @@ class FormField extends AbstractModel implements FormFieldModel
         return $this->data['attributes'][$key] ?? null;
     }
 
-    public function getFormModel(): FormModel
+    /**
+     * @return \Canvass\Contract\FormModel
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function getFormModel()
     {
         if (null === $this->form_model) {
             $this->form_model = Forge::form()->find(
@@ -97,12 +108,20 @@ class FormField extends AbstractModel implements FormFieldModel
         return $this->form_model;
     }
 
-    public function setFormModel(FormModel $form_model): void
+    /**
+     * @param \Canvass\Contract\FormModel $form_model
+     * @return void
+     */
+    public function setFormModel(FormModel $form_model)
     {
         $this->form_model = $form_model;
     }
 
-    public function hasAttribute($key): bool
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function hasAttribute($key)
     {
         $this->convertAttributesToArray();
 
@@ -139,12 +158,14 @@ class FormField extends AbstractModel implements FormFieldModel
         return $models;
     }
 
-    private function convertAttributesToArray(): void
+    /** @return void */
+    private function convertAttributesToArray()
     {
         if (empty($this->data['attributes'])) {
             $this->data['attributes'] = [];
         } elseif (is_string($this->data['attributes'])) {
-            $this->data['attributes'] = json_decode($this->data['attributes'], true);
+            $this->data['attributes'] =
+                json_decode($this->data['attributes'], true);
         } elseif (! is_array($this->data['attributes'])) {
             $this->data['attributes'] = (array) $this->data['attributes'];
         }

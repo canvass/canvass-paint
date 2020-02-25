@@ -39,7 +39,8 @@ class RenderForm
         return $this->renderer->render($data);
     }
 
-    public function getForm(): \Canvass\Contract\FormModel
+    /** @return \Canvass\Contract\FormModel */
+    public function getForm()
     {
         return $this->form;
     }
