@@ -69,7 +69,7 @@ class Form extends AbstractModel implements FormModel
      * @return \Canvass\Contract\FormFieldModel|null
      */
     public function findFieldWithSortOf(
-        int $sort,
+        $sort,
         $parent_id = 0
     )
     {
@@ -90,7 +90,7 @@ class Form extends AbstractModel implements FormModel
         return $field;
     }
 
-    public function findFieldsWithSortGreaterThan(int $sort, $parent_id = 0)
+    public function findFieldsWithSortGreaterThan($sort, $parent_id = 0)
     {
         $sql = 'SELECT * FROM ' . FormField::getTable() .
             ' WHERE form_id = :form_id' .

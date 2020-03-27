@@ -13,7 +13,7 @@
     ],
     "require": {
         "ext-pdo": "*",
-        "canvass/canvass-core": "0.*"
+        "canvass/canvass-core": "dev-feature/php5"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

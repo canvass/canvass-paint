@@ -42,7 +42,7 @@ class AbstractModel implements \ArrayAccess
      * @param array|null $params
      * @return \CanvassPaint\PdoModel\AbstractModel
      */
-    protected function fetchModel(string $sql, array $params = null)
+    protected function fetchModel($sql, array $params = null)
     {
         $row = $this->fetch($sql, $params);
 
@@ -54,7 +54,7 @@ class AbstractModel implements \ArrayAccess
      * @param array|null $params
      * @return \CanvassPaint\PdoModel\AbstractModel[]
      */
-    protected function fetchModels(string $sql, array $params = null)
+    protected function fetchModels($sql, array $params = null)
     {
         $rows = $this->fetchAll($sql, $params);
 
@@ -74,9 +74,9 @@ class AbstractModel implements \ArrayAccess
      * @return array
      */
     protected function fetch(
-        string $sql,
+        $sql,
         array $params = null,
-        int $fetch_style = \PDO::FETCH_ASSOC
+        $fetch_style = \PDO::FETCH_ASSOC
     )
     {
         $statement = $this->db->prepare($sql);
@@ -93,9 +93,9 @@ class AbstractModel implements \ArrayAccess
      * @return array
      */
     protected function fetchAll(
-        string $sql,
+        $sql,
         array $params = null,
-        int $fetch_style = \PDO::FETCH_ASSOC
+        $fetch_style = \PDO::FETCH_ASSOC
     )
     {
         $statement = $this->db->prepare($sql);
@@ -107,12 +107,20 @@ class AbstractModel implements \ArrayAccess
 
     public function getId()
     {
-        return $this->data['id'] ?? null;
+        if (empty($this->data['id'])) {
+            return null;
+        }
+
+        return $this->data['id'];
     }
 
     public function getData($key)
     {
-        return $this->data[$key] ?? null;
+        if (empty($this->data[$key])) {
+            return null;
+        }
+
+        return $this->data[$key];
     }
 
     public function setData($key, $value)

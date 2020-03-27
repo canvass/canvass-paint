@@ -142,7 +142,7 @@ class FormField extends AbstractModel implements FormFieldModel
      * @return \CanvassPaint\PdoModel\AbstractModel[]
      */
     protected function fetchModels(
-        string $sql,
+        $sql,
         array $params = null,
         FormModel $form_model = null
     )
