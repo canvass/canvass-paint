@@ -18,6 +18,25 @@ class AbstractModel implements \ArrayAccess
         $this->db = $db;
 
         $this->data = $data;
+
+        if (function_exists('env')) {
+            $model = $pattern = strtolower(
+                preg_replace(
+                    '/([a-z])([A-Z])/',
+                    '$1_$2',
+                    trim(
+                        str_replace(__NAMESPACE__, '', static::class),
+                        '\\'
+                    )
+                )
+            );
+
+            $table = env("canvass_paint_{$model}_table");
+
+            if (null !== $table) {
+                static::$table = $table;
+            }
+        }
     }
 
     public function find($id, $owner_id = null)
@@ -71,8 +90,14 @@ class AbstractModel implements \ArrayAccess
         $statement = $this->db->prepare($sql);
 
         $statement->execute($params);
-
-        return $statement->fetch($fetch_style);
+        
+        $fetched = $statement->fetch($fetch_style);
+        
+        if ($fetched) {
+            return $fetched;
+        }
+        
+        return [];
     }
 
     protected function fetchAll(
@@ -85,7 +110,13 @@ class AbstractModel implements \ArrayAccess
 
         $statement->execute($params);
 
-        return $statement->fetchAll($fetch_style);
+        $fetched = $statement->fetchAll($fetch_style);
+
+        if ($fetched) {
+            return $fetched;
+        }
+
+        return [];
     }
 
     public function getId()

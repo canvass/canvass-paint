@@ -5,12 +5,13 @@ namespace CanvassPaint\PdoModel;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Support\PreparesFormData;
+use Canvass\Support\RetrievesNestedFieldData;
 
 class Form extends AbstractModel implements FormModel
 {
-    protected static $table = 'canvass_forms';
+    protected static $table = 'forms';
     
-    use PreparesFormData;
+    use PreparesFormData, RetrievesNestedFieldData;
 
     public function findAllForListing($owner_id = null)
     {
@@ -64,7 +65,7 @@ class Form extends AbstractModel implements FormModel
     }
 
     public function findFieldWithSortOf(
-        int $sort,
+        $sort,
         $parent_id = 0
     ): ?FormFieldModel
     {
@@ -85,7 +86,7 @@ class Form extends AbstractModel implements FormModel
         return $field;
     }
 
-    public function findFieldsWithSortGreaterThan(int $sort, $parent_id = 0)
+    public function findFieldsWithSortGreaterThan($sort, $parent_id = 0)
     {
         $sql = 'SELECT * FROM ' . FormField::getTable() .
             ' WHERE form_id = :form_id' .

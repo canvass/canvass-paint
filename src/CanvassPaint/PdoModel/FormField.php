@@ -13,7 +13,7 @@ class FormField extends AbstractModel implements FormFieldModel
     /** @var FormModel */
     private $form_model;
 
-    protected static $table = 'canvass_form_fields';
+    protected static $table = 'form_fields';
 
     use PreparesFormFieldData;
 
@@ -52,6 +52,11 @@ class FormField extends AbstractModel implements FormFieldModel
         $sql .= ' ORDER BY sort ASC';
 
         return $this->fetchModels($sql, $params);
+    }
+
+    public function getGeneralType()
+    {
+        return $this->data['general_type'];
     }
 
     public function getHtmlType(): string
