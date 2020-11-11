@@ -24,7 +24,7 @@ class RenderForm
         /** @var \Canvass\Contract\FormModel $form */
         $this->form = Forge::form()->find($form_id, $owner_id);
 
-        if (null === $this->form || null === $this->form->id) {
+        if (null === $this->form || null === $this->form->getId()) {
             throw new FormNotFoundException(
                 'Could not find form ' . $form_id
             );
