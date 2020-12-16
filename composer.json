@@ -14,7 +14,7 @@
     "require": {
         "ext-pdo": "*",
         "ext-json": "*",
-        "canvass/canvass-core": "^1.01"
+        "canvass/canvass-core": "^1.02"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
